@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ProjekatSahOOP
 {
-    
-  
+
+
     public class Board
     {
-        Piece[,] board = new Piece[8,8];
-        public Piece GetPiece(int R, int C) => board[R,C];
-        public Piece GetPiece(Kvadrat K) => board[K.Row,K.Col];
-        public void SetPiece(int R, int C, Piece piece) => board[R,C] = piece;
+        Piece[,] board = new Piece[8, 8];
+        public Piece GetPiece(int R, int C) => board[R, C];
+        public Piece GetPiece(Kvadrat K) => board[K.Row, K.Col];
+        public void SetPiece(int R, int C, Piece piece) => board[R, C] = piece;
         public void SetPiece(Kvadrat K, Piece piece) => board[K.Row, K.Col] = piece;
         public bool Unutar(int R, int C)
         {
@@ -21,14 +21,33 @@ namespace ProjekatSahOOP
         }
         public Kvadrat GdeKralj(bool beli)
         {
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
-                    if (board[i,j] is Kralj k && k.beli == beli)return new Kvadrat(i, j);
+                    if (board[i, j] is Kralj k && k.beli == beli) return new Kvadrat(i, j);
                 }
             }
             throw new Exception("NEMA KRALJA!!!");
         }
-    }
+        public bool Napadnut(Kvadrat K, bool beli)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Piece p = board[i, j];
+                    if (p == null || p.beli != beli) continue;
+                    p.RacunajPoteze(this, new Kvadrat(i, j));
+                    if (p.Potezi.Contains(K)) return true;
+                }
+            }
+            return false;
+        }
+        public bool SAH(bool beli)
+        {
+            Kvadrat kralj = GdeKralj(beli);
+            return Napadnut(kralj, !beli);
+        }
+    } 
 }
