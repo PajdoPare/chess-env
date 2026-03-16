@@ -55,9 +55,11 @@
     </Compile>
     <Compile Include="Kralj.cs" />
     <Compile Include="Kraljica.cs" />
+    <Compile Include="Kvadrat.cs" />
     <Compile Include="Lovac.cs" />
     <Compile Include="Pesak.cs" />
     <Compile Include="Piece.cs" />
+    <Compile Include="Potez.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skakac.cs" />

@@ -8,8 +8,8 @@ namespace ProjekatSahOOP
 {
     internal class Lovac : Piece
     {
-        public Lovac(bool beli) : base(beli) { }
-        public override void RacunajPoteze(Board board, Kvadrat k)
+        public Lovac(bool beli) : base(beli) { this.T = Tip.Lovac; }
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
         {
             int[] dr = { 1, -1, 1, -1 };
             int[] dc = { 1, -1, -1, 1 };

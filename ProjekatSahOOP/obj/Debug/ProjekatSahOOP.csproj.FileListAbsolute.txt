@@ -1,0 +1,5 @@
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.AssemblyReference.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Form1.resources
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache

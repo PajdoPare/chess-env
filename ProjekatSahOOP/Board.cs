@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace ProjekatSahOOP
 {
-
-
     public class Board
     {
         Piece[,] board = new Piece[8, 8];
@@ -18,6 +16,20 @@ namespace ProjekatSahOOP
         public bool Unutar(int R, int C)
         {
             return R >= 0 && C >= 0 && R < 8 && C < 8;
+        }
+        public void NapraviPotez(Potez x)
+        {
+            Piece p = GetPiece(x.Polazno);
+            if (p == null) throw new Exception("NEMA FIGURE NA POLAZNOJ POZICIJI!!!");
+            SetPiece(x.Odredisno, p);
+            SetPiece(x.Polazno, null);
+            if (x.EnPassant) SetPiece(x.EnPassantKV, null);
+            if(x.Rokada)
+            {
+                SetPiece(x.TopOKV, GetPiece(x.TopPKV));
+                SetPiece(x.TopPKV, null);
+                if (x.Promocija != null) SetPiece(x.Odredisno, x.Promocija);
+            }
         }
         public Kvadrat GdeKralj(bool beli)
         {
@@ -38,7 +50,13 @@ namespace ProjekatSahOOP
                 {
                     Piece p = board[i, j];
                     if (p == null || p.beli != beli) continue;
-                    p.RacunajPoteze(this, new Kvadrat(i, j));
+                    if(p is Pesak)
+                    {
+                        Pesak pesak = (Pesak)p;
+                        pesak.KogaNapadam(this, new Kvadrat(i, j));
+                        if (pesak.Potezi.Contains(K)) return true;
+                    }
+                    p.RacunajPoteze(this, new Kvadrat(i, j), null);
                     if (p.Potezi.Contains(K)) return true;
                 }
             }
@@ -48,6 +66,32 @@ namespace ProjekatSahOOP
         {
             Kvadrat kralj = GdeKralj(beli);
             return Napadnut(kralj, !beli);
+        }
+        public void Pocetno()
+        {
+            bool t = true;
+            SetPiece(0, 0, new Top(t));
+            SetPiece(0, 1, new Skakac(t));
+            SetPiece(0, 2, new Lovac(t));
+            SetPiece(0, 3, new Kraljica(t));
+            SetPiece(0, 4, new Kralj(t));
+            SetPiece(0, 5, new Lovac(t));
+            SetPiece(0, 6, new Skakac(t));
+            SetPiece(0, 7, new Top(t));
+
+            SetPiece(7, 0, new Top(!t));
+            SetPiece(7, 1, new Skakac(!t));
+            SetPiece(7, 2, new Lovac(!t));
+            SetPiece(7, 3, new Kraljica(!t));
+            SetPiece(7, 4, new Kralj(!t));
+            SetPiece(7, 5, new Lovac(!t));
+            SetPiece(7, 6, new Skakac(!t));
+            SetPiece(7, 7, new Top(!t));
+            for (int i = 0; i <= 7; i++)
+            {
+                SetPiece(1, i, new Pesak(t));
+                SetPiece(6, i, new Pesak(!t));
+            }
         }
     } 
 }

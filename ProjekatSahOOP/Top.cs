@@ -8,12 +8,13 @@ namespace ProjekatSahOOP
 {
     internal class Top : Piece
     {
-        bool pomeren;
+        public bool pomeren;
         public Top(bool beli): base (beli)
         {
             pomeren = false;
+            this.T = Tip.Top;
         }
-        public override void RacunajPoteze(Board board, Kvadrat k)
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
         {
             Potezi.Clear();
             int[] dr = { 1, 0, -1, 0 };

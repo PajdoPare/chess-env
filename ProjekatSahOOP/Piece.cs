@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace ProjekatSahOOP
 {
-    
+    public enum Tip { Pesak, Top, Lovac, Skakac, Kraljica, Kralj };
     public abstract class Piece
     {
         bool alive;
+        public Tip T { get; set; }
         public bool beli;
         public Image Image;
         public List<Kvadrat> Potezi;
-        public abstract void RacunajPoteze(Board board, Kvadrat k);
+        public abstract void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV);
         public Piece(bool beli)
         {
             this.alive = true;

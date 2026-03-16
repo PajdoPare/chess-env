@@ -8,8 +8,8 @@ namespace ProjekatSahOOP
 {
     internal class Kraljica : Piece
     {
-        public Kraljica(bool beli) : base(beli) { }
-        public override void RacunajPoteze(Board board, Kvadrat k)
+        public Kraljica(bool beli) : base(beli) { this.T = Tip.Kraljica; }
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
         {
             Potezi.Clear();
             int[] dr = { 1, 0, -1, 0 };
