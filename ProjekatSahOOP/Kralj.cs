@@ -8,7 +8,7 @@ namespace ProjekatSahOOP
 {
     internal class Kralj : Piece
     {
-        bool pomeren;
+        
         public Kralj(bool beli) : base(beli)
         {
             pomeren = false;

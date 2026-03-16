@@ -93,5 +93,17 @@ namespace ProjekatSahOOP
                 SetPiece(6, i, new Pesak(!t));
             }
         }
+        public Board Clone()
+        {
+            Board clone = new Board();
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    clone.board[i, j] = board[i, j];
+                }
+            }
+            return clone;
+        }
     } 
 }

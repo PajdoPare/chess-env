@@ -10,7 +10,7 @@ namespace ProjekatSahOOP
     public enum Tip { Pesak, Top, Lovac, Skakac, Kraljica, Kralj };
     public abstract class Piece
     {
-        bool alive;
+        public bool alive, pomeren;
         public Tip T { get; set; }
         public bool beli;
         public Image Image;

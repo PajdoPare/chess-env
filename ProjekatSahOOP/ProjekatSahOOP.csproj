@@ -53,6 +53,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameState.cs" />
+    <Compile Include="GrafikaTabla.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Kralj.cs" />
     <Compile Include="Kraljica.cs" />
     <Compile Include="Kvadrat.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

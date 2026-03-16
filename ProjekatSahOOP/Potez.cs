@@ -11,6 +11,7 @@ namespace ProjekatSahOOP
         public Kvadrat Polazno { get; set; }
         public Kvadrat Odredisno { get; set; }
         public Piece Promocija { get; set; }
+        public bool Promo { get; set; }
         public bool Rokada { get; set; } 
         public bool EnPassant { get; set; }
         public Kvadrat EnPassantKV { get; set; } 

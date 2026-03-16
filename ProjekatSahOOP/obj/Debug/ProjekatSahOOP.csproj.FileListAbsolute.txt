@@ -3,3 +3,8 @@ C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahO
 C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
 C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
 C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe.config
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.pdb
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.exe
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.pdb

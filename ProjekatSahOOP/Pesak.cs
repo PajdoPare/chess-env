@@ -10,7 +10,7 @@ namespace ProjekatSahOOP
 {
     internal class Pesak : Piece
     {
-        public bool pomeren;
+        
         public Pesak(bool beli) : base(beli)
         {
             pomeren = false;

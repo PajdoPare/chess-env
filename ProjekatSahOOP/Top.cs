@@ -8,7 +8,7 @@ namespace ProjekatSahOOP
 {
     internal class Top : Piece
     {
-        public bool pomeren;
+        
         public Top(bool beli): base (beli)
         {
             pomeren = false;
