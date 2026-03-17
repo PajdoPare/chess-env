@@ -154,4 +154,40 @@
   <data name="CrniTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\CrniTop.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="KraljB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\KraljB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KraljC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\KraljC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KraljicaB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\KraljicaB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="KraljicaC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\KraljicaC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LovacB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LovacB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LovacC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LovacC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PesakB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PesakB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PesakC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PesakC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkakacB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SkakacB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SkakacC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SkakacC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TopB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\TopB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TopC" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\TopC.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

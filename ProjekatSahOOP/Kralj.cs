@@ -14,7 +14,7 @@ namespace ProjekatSahOOP
             pomeren = false;
             this.T = Tip.Kralj;
         }
-        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null, bool TrazimSah = false)
         {
             int[] dr = { -1, -1, -1, 0, 0, 1, 1, 1 };
             int[] dc = { -1, 0, 1, -1, 1, -1, 0, 1 };
@@ -25,7 +25,7 @@ namespace ProjekatSahOOP
                 int c = k.Col + dc[i];
                 if (board.Unutar(r, c) && (board.GetPiece(r, c) == null || board.GetPiece(r, c).beli != beli))
                     Potezi.Add(new Kvadrat(r, c));
-                if(!pomeren && !board.SAH(beli))
+                if(!pomeren && !TrazimSah && !board.SAH(beli))
                 {
                     Rokada(board, k, true);
                     Rokada(board, k, false);

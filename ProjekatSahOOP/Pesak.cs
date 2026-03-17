@@ -28,7 +28,7 @@ namespace ProjekatSahOOP
             }
         }
 
-        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null, bool TrazimSah = false)
         {
             Potezi.Clear();
             int smer = beli ? -1 : 1;

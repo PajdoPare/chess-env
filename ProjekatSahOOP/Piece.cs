@@ -15,7 +15,7 @@ namespace ProjekatSahOOP
         public bool beli;
         public Image Image;
         public List<Kvadrat> Potezi;
-        public abstract void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV);
+        public abstract void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV, bool TrazimSah = false);
         public Piece(bool beli)
         {
             this.alive = true;

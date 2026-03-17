@@ -57,6 +57,7 @@
     <Compile Include="GrafikaTabla.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ImageDetection.cs" />
     <Compile Include="Kralj.cs" />
     <Compile Include="Kraljica.cs" />
     <Compile Include="Kvadrat.cs" />
@@ -106,11 +107,23 @@
     <Content Include="Icons\BeliSkakac.bmp" />
     <Content Include="Icons\BeliTop.bmp" />
     <Content Include="Icons\CrnaKraljica.bmp" />
+    <Content Include="Icons\LovacC.png" />
+    <Content Include="Icons\KraljB.png" />
+    <Content Include="Icons\KraljC.png" />
+    <Content Include="Icons\KraljicaC.png" />
     <Content Include="Icons\CrniKralj.bmp" />
     <Content Include="Icons\CrniLovac.bmp" />
     <Content Include="Icons\CrniPesak.bmp" />
+    <Content Include="Icons\PesakB.png" />
+    <Content Include="Icons\SkakacC.png" />
+    <Content Include="Icons\TopB.png" />
+    <Content Include="Icons\TopC.png" />
+    <Content Include="Icons\PesakC.png" />
     <Content Include="Icons\CrniSkakac.bmp" />
     <Content Include="Icons\CrniTop.bmp" />
+    <Content Include="Icons\KraljicaB.png" />
+    <Content Include="Icons\LovacB.png" />
+    <Content Include="Icons\SkakacB.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

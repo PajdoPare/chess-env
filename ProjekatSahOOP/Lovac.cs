@@ -9,8 +9,9 @@ namespace ProjekatSahOOP
     internal class Lovac : Piece
     {
         public Lovac(bool beli) : base(beli) { this.T = Tip.Lovac; }
-        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null, bool TrazimSah = false)
         {
+            Potezi.Clear();
             int[] dr = { 1, -1, 1, -1 };
             int[] dc = { 1, -1, -1, 1 };
             Potezi.Clear();
@@ -23,7 +24,8 @@ namespace ProjekatSahOOP
                 {
                     Piece ovde = board.GetPiece(r, c);
                     if (ovde == null) this.Potezi.Add(new Kvadrat(r, c));
-                    else if (ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break; }
+                    if (ovde != null && ovde.beli == this.beli) break;
+                    else if (ovde != null && ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break; }
                     r += dr[i];
                     c += dc[i];
 

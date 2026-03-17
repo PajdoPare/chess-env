@@ -9,7 +9,7 @@ namespace ProjekatSahOOP
     internal class Kraljica : Piece
     {
         public Kraljica(bool beli) : base(beli) { this.T = Tip.Kraljica; }
-        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null)
+        public override void RacunajPoteze(Board board, Kvadrat k, Kvadrat? EnPassantKV = null, bool TrazimSah = false)
         {
             Potezi.Clear();
             int[] dr = { 1, 0, -1, 0 };
@@ -23,7 +23,9 @@ namespace ProjekatSahOOP
                 {
                     Piece ovde = board.GetPiece(r, c);
                     if (ovde == null) this.Potezi.Add(new Kvadrat(r, c));
-                    else if (ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break; }
+                    if (ovde != null && ovde.beli == this.beli) break;
+                    else if ( ovde != null && ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break;}
+                    
                     r += dr[i];
                     c += dc[i];
 
@@ -41,7 +43,8 @@ namespace ProjekatSahOOP
                 {
                     Piece ovde = board.GetPiece(r, c);
                     if (ovde == null) this.Potezi.Add(new Kvadrat(r, c));
-                    else if (ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break; }
+                    if (ovde != null && ovde.beli == this.beli) break;
+                    else if (ovde != null && ovde.beli != this.beli) { this.Potezi.Add(new Kvadrat(r, c)); break; }
                     r += dr2[i];
                     c += dc2[i];
 

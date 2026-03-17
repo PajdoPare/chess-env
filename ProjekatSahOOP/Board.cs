@@ -55,8 +55,9 @@ namespace ProjekatSahOOP
                         Pesak pesak = (Pesak)p;
                         pesak.KogaNapadam(this, new Kvadrat(i, j));
                         if (pesak.Potezi.Contains(K)) return true;
+                        continue;
                     }
-                    p.RacunajPoteze(this, new Kvadrat(i, j), null);
+                    p.RacunajPoteze(this, new Kvadrat(i, j), null, true);
                     if (p.Potezi.Contains(K)) return true;
                 }
             }
@@ -69,7 +70,7 @@ namespace ProjekatSahOOP
         }
         public void Pocetno()
         {
-            bool t = true;
+            bool t = false;
             SetPiece(0, 0, new Top(t));
             SetPiece(0, 1, new Skakac(t));
             SetPiece(0, 2, new Lovac(t));
