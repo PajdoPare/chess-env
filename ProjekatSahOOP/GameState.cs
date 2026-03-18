@@ -12,15 +12,19 @@ namespace ProjekatSahOOP
         public Board Board { get; set; }
         public Status St { get; set; }
         public bool CijiPotez { get; set; }
+        public bool Flipped { get; set; } = true;         
         public Kvadrat? EnPassantKV { get; set; } = null;
         public bool BeliRokadaDozvoljenaDesno { get; set; } = true;
         public bool CrniRokadaDozvoljenaDesno { get; set; } = true;
         public bool BeliRokadaDozvoljenaLevo { get; set; } = true;
         public bool CrniRokadaDozvoljenaLevo { get; set; } = true;
         public List<Potez> MoveHistory { get; set; } = new List<Potez>();
+        public List<Piece> BeliUzeo, CrniUzeo;
         Dictionary<Kvadrat, List<Kvadrat>>LegalniSt = new Dictionary<Kvadrat, List<Kvadrat>>();
         public GameState()
         {
+            BeliUzeo = new List<Piece>();
+            CrniUzeo = new List<Piece>();
             Board = new Board();
             Board.Pocetno();
             CijiPotez = true;
@@ -36,17 +40,18 @@ namespace ProjekatSahOOP
             Board.SetPiece(P, null);
             p.pomeren = true;
             Kvadrat? EPKV = null;
+            Piece EPPesak = null;
             if (p.T == Tip.Pesak && EnPassantKV.HasValue && EnPassantKV.Value == O)
             {
                 EPKV = new Kvadrat(P.Row, O.Col);
-                o = Board.GetPiece(EPKV.Value);
+                EPPesak = Board.GetPiece(EPKV.Value);
                 Board.SetPiece(EPKV.Value, null);
             }
             bool sah = Board.SAH(CijiPotez);
             Board.SetPiece(P, p);
             Board.SetPiece(O, o);
             p.pomeren = (p.T == Tip.Kralj || p.T == Tip.Top) ? pomeren : pomeren;
-            if(EPKV.HasValue)Board.SetPiece(EPKV.Value, o);
+            if(EPKV.HasValue)Board.SetPiece(EPKV.Value, EPPesak);
             return sah;
         }   
             public List<Kvadrat> LegalMoves(Kvadrat K)
@@ -68,6 +73,7 @@ namespace ProjekatSahOOP
         void PotegniPotez(Board board, Kvadrat P, Kvadrat O, Kvadrat? EnPassantKV, Piece Promotion = null)
         {
             Piece p = board.GetPiece(P);
+            Piece uhvacen = board.GetPiece(O);
             board.SetPiece(O, p);
             board.SetPiece(P, null);
             p.pomeren = true;
@@ -84,12 +90,18 @@ namespace ProjekatSahOOP
             if (p.T == Tip.Pesak && EnPassantKV != null && O.Equals(EnPassantKV.Value))
             {
                 int R = P.Row;
+                uhvacen = board.GetPiece(new Kvadrat(R, O.Col));
                 board.SetPiece(new Kvadrat(R, O.Col), null);
             }
             if (p.T == Tip.Pesak)
             {
                 int promoteRow = p.beli ? 0 : 7;
                 if (O.Row == promoteRow && Promotion != null) board.SetPiece(O, Promotion);
+            }
+            if(uhvacen != null && board == Board)
+            {
+                if (CijiPotez) BeliUzeo.Add(uhvacen);
+                else CrniUzeo.Add(uhvacen);
             }
         }
         Potez Sklopi(Kvadrat P, Kvadrat O, Piece Promotion = null)

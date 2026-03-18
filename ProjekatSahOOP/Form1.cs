@@ -18,9 +18,9 @@ namespace ProjekatSahOOP
         Kvadrat? Selected;
         List<Kvadrat> Legalni;
         ListBox ListPotez;
-        Label StatusO;
+        Label StatusO, BeliU, CrniU;
         Button NewGame;
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace ProjekatSahOOP
             StartPosition = FormStartPosition.CenterScreen;
             ImageMapping.Load();
             GS = new GameState();
-            
+
             GS.PromocijaObavezna += GS_Promo;
             GT = new GrafikaTabla();
             Deselect();
@@ -41,7 +41,26 @@ namespace ProjekatSahOOP
             Controls.Add(GT);
             UpdateUI();
         }
-        void Deselect()
+        int PieceVal(Tip t)
+        {
+            switch(t)
+            {
+                case Tip.Pesak:
+                    return 1;
+                case Tip.Skakac:
+                    return 3;
+                case Tip.Lovac:
+                    return 3;
+                case Tip.Top:
+                    return 5;
+                case Tip.Kraljica:
+                    return 9;
+                default:
+                    return 0;
+            }
+        }
+
+    void Deselect()
         {
             Selected = null;
             GT.Selected = null;
@@ -50,14 +69,21 @@ namespace ProjekatSahOOP
         }
         void GS_Promo(Kvadrat P, Kvadrat O)
         {
-
+            try
+            {
+                PromotionForm PF = new PromotionForm(GS.CijiPotez);
+                PF.ShowDialog();
+                Tip t = PF.Chosen;
+                GS.Unapredjenje(P, O, t);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void SidePanel()
         {
             Panel sidePanel = new Panel
             {
                 Location = new Point(800, 0),
-                Size = new Size(220, 800),
+                Size = new Size(300, 800),
                 BackColor = Color.LightGray
             };
             StatusO = new Label
@@ -93,7 +119,24 @@ namespace ProjekatSahOOP
                 Deselect();
                 ListPotez.Items.Clear();
                 UpdateUI();
+                GS.PromocijaObavezna += GS_Promo;
             };
+            BeliU = new Label
+            {
+                Location = new Point(10, 560),
+                Size = new Size(270, 30),
+                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Text = "Beli: 0"
+            };
+            CrniU = new Label
+            {
+                Location = new Point(10, 600),
+                Size = new Size(270, 30),
+                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Text = "Crni: 0"
+            };
+            sidePanel.Controls.Add(BeliU);
+            sidePanel.Controls.Add(CrniU);
             sidePanel.Controls.Add(StatusO);
             sidePanel.Controls.Add(ListPotez);
             sidePanel.Controls.Add(NewGame);
@@ -138,12 +181,24 @@ namespace ProjekatSahOOP
         }
         void UpdateUI()
         {
+            GS.Flipped = !GS.Flipped;
             GT.LastMove = GS.MoveHistory.LastOrDefault();
             GT.Invalidate();
             UpdateStatusO();
             UpdateMoveHistory();
+            UpdateCapturedPieces();
             ListPotez.ForeColor = GS.CijiPotez ? Color.White : Color.Black;
 
+        }
+        void UpdateCapturedPieces()
+        {
+            BeliU.Text = "Beli: " + CapturedPieces(GS.BeliUzeo);
+            CrniU.Text = "Crni: " + CapturedPieces(GS.CrniUzeo);
+        }
+        string CapturedPieces(List<Piece> uhv)
+        {
+            List<Piece> pieces = uhv.OrderByDescending(p => PieceVal(p.T)).ToList();
+            return string.Join("", pieces.Select(p => p.ToString()));
         }
         void UpdateMoveHistory()
         {

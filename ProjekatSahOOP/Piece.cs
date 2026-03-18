@@ -26,6 +26,19 @@ namespace ProjekatSahOOP
         {
             alive = false;
         }
+        public override string ToString()
+        {
+            switch(T)
+            {
+                case Tip.Pesak: return "♙";
+                case Tip.Top: return "♖";
+                case Tip.Lovac: return "♗";
+                case Tip.Skakac: return "♘";
+                case Tip.Kraljica: return "♕";
+                case Tip.Kralj: return "♔";
+                default: return "";
+            }
+        }
 
     }
 }
