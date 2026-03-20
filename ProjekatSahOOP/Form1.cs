@@ -19,6 +19,7 @@ namespace ProjekatSahOOP
         List<Kvadrat> Legalni;
         ListBox ListPotez;
         Label StatusO, BeliU, CrniU;
+        int BeliP, CrniP;
         Button NewGame;
 
         public Form1()
@@ -43,7 +44,7 @@ namespace ProjekatSahOOP
         }
         int PieceVal(Tip t)
         {
-            switch(t)
+            switch (t)
             {
                 case Tip.Pesak:
                     return 1;
@@ -60,7 +61,7 @@ namespace ProjekatSahOOP
             }
         }
 
-    void Deselect()
+        void Deselect()
         {
             Selected = null;
             GT.Selected = null;
@@ -89,15 +90,15 @@ namespace ProjekatSahOOP
             StatusO = new Label
             {
                 Location = new Point(10, 10),
-                Size = new Size(200, 30),
-                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Size = new Size(270, 30),
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
                 Text = "Igrac Beli je na potezu."
             };
             ListPotez = new ListBox
             {
                 Location = new Point(10, 50),
                 Size = new Size(200, 500),
-                Font = new Font("Comic Sans", 10, FontStyle.Regular),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Regular),
                 BackColor = Color.FromArgb(40, 164, 221),
                 ForeColor = Color.White,
                 ScrollAlwaysVisible = false,
@@ -107,7 +108,7 @@ namespace ProjekatSahOOP
                 Location = new Point(10, 700),
                 Size = new Size(200, 40),
                 Text = "Nova igra",
-                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
                 BackColor = Color.FromArgb(40, 164, 221),
                 ForeColor = Color.White,
                 Cursor = Cursors.Hand
@@ -124,15 +125,15 @@ namespace ProjekatSahOOP
             BeliU = new Label
             {
                 Location = new Point(10, 560),
-                Size = new Size(270, 30),
-                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Size = new Size(290, 30),
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
                 Text = "Beli: 0"
             };
             CrniU = new Label
             {
                 Location = new Point(10, 600),
-                Size = new Size(270, 30),
-                Font = new Font("Comic Sans", 12, FontStyle.Bold),
+                Size = new Size(290, 30),
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
                 Text = "Crni: 0"
             };
             sidePanel.Controls.Add(BeliU);
@@ -143,7 +144,7 @@ namespace ProjekatSahOOP
             Controls.Add(sidePanel);
             ClientSize = new Size(1020, 800);
         }
-            private void GT_Klik(Kvadrat obj)
+        private void GT_Klik(Kvadrat obj)
         {
             if (Selected == null)
             {
@@ -175,18 +176,20 @@ namespace ProjekatSahOOP
                     GT.Selected = Selected;
                     GT.Legalni = Legalni;
                 }
-
             }
             GT.Invalidate();
         }
         void UpdateUI()
         {
-            GS.Flipped = !GS.Flipped;
+            BeliP = GS.BeliP;
+            CrniP = GS.CrniP;
             GT.LastMove = GS.MoveHistory.LastOrDefault();
             GT.Invalidate();
             UpdateStatusO();
             UpdateMoveHistory();
             UpdateCapturedPieces();
+            //Task.Delay(1000).GetAwaiter().GetResult();
+            GS.Flipped = !GS.Flipped;
             ListPotez.ForeColor = GS.CijiPotez ? Color.White : Color.Black;
 
         }
@@ -194,6 +197,8 @@ namespace ProjekatSahOOP
         {
             BeliU.Text = "Beli: " + CapturedPieces(GS.BeliUzeo);
             CrniU.Text = "Crni: " + CapturedPieces(GS.CrniUzeo);
+            if (BeliP > CrniP) BeliU.Text += " +" + (BeliP - CrniP).ToString();
+            else if (BeliP < CrniP) CrniU.Text += " +" + (CrniP - BeliP).ToString();
         }
         string CapturedPieces(List<Piece> uhv)
         {

@@ -26,6 +26,20 @@ namespace ProjekatSahOOP
             DoubleBuffered = true;
             ResizeRedraw = true;
         }
+        void DrawLabele(Graphics g)
+        {
+            Font font = new Font("Comic Sans MS", KVSize / 4, FontStyle.Bold);
+            for (int i = 0; i < 8; i++)
+            {
+                int c = GS.Flipped ? 7 - i : i;
+                string label = ((char)('a' + c)).ToString();
+                int x = i * KVSize + KVSize - (KVSize / 4) -35;
+                int y = 7 * KVSize + KVSize - (KVSize / 4) - 2;
+                bool isLight = (((7 + i) & 1) == 0);
+                SolidBrush cetka = isLight ? new SolidBrush(Crni) : new SolidBrush(Beli);
+                g.DrawString(label, font, cetka, x, y);
+            }
+        }
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -82,6 +96,7 @@ namespace ProjekatSahOOP
                 bool jede = (b.GetPiece(k) != null || (GS.EnPassantKV.HasValue && GS.EnPassantKV == k));
                 Tackica(g, k, jede);
             }
+            DrawLabele(g);
         }
         protected override void OnMouseDown(MouseEventArgs e)
         {

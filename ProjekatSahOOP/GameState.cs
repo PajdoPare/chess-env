@@ -12,7 +12,7 @@ namespace ProjekatSahOOP
         public Board Board { get; set; }
         public Status St { get; set; }
         public bool CijiPotez { get; set; }
-        public bool Flipped { get; set; } = true;         
+        public bool Flipped { get; set; } = true;
         public Kvadrat? EnPassantKV { get; set; } = null;
         public bool BeliRokadaDozvoljenaDesno { get; set; } = true;
         public bool CrniRokadaDozvoljenaDesno { get; set; } = true;
@@ -20,7 +20,7 @@ namespace ProjekatSahOOP
         public bool CrniRokadaDozvoljenaLevo { get; set; } = true;
         public List<Potez> MoveHistory { get; set; } = new List<Potez>();
         public List<Piece> BeliUzeo, CrniUzeo;
-        Dictionary<Kvadrat, List<Kvadrat>>LegalniSt = new Dictionary<Kvadrat, List<Kvadrat>>();
+        Dictionary<Kvadrat, List<Kvadrat>> LegalniSt = new Dictionary<Kvadrat, List<Kvadrat>>();
         public GameState()
         {
             BeliUzeo = new List<Piece>();
@@ -30,6 +30,8 @@ namespace ProjekatSahOOP
             CijiPotez = true;
             St = Status.Normal;
         }
+        public int BeliP => Board.BeliVal();
+        public int CrniP => Board.CrniVal();
         public event Action<Kvadrat, Kvadrat> PromocijaObavezna;
         bool BiceSah(Kvadrat P, Kvadrat O)
         {
@@ -51,20 +53,20 @@ namespace ProjekatSahOOP
             Board.SetPiece(P, p);
             Board.SetPiece(O, o);
             p.pomeren = (p.T == Tip.Kralj || p.T == Tip.Top) ? pomeren : pomeren;
-            if(EPKV.HasValue)Board.SetPiece(EPKV.Value, EPPesak);
+            if (EPKV.HasValue) Board.SetPiece(EPKV.Value, EPPesak);
             return sah;
-        }   
-            public List<Kvadrat> LegalMoves(Kvadrat K)
+        }
+        public List<Kvadrat> LegalMoves(Kvadrat K)
         {
-            if(LegalniSt.TryGetValue(K, out List<Kvadrat> leg)) return leg;
+            if (LegalniSt.TryGetValue(K, out List<Kvadrat> leg)) return leg;
             List<Kvadrat> legal = new List<Kvadrat>();
             Piece p = Board.GetPiece(K);
             if (p == null || p.beli != CijiPotez) return legal;
             p.RacunajPoteze(Board, K, EnPassantKV);
             foreach (Kvadrat x in p.Potezi)
             {
-                if(p.T == Tip.Kralj && DaLiJeRokada(K, x) && !DozvoljenaRokada(K, x)) continue;
-                if(!BiceSah(K, x)) legal.Add(x);
+                if (p.T == Tip.Kralj && DaLiJeRokada(K, x) && !DozvoljenaRokada(K, x)) continue;
+                if (!BiceSah(K, x)) legal.Add(x);
             }
             LegalniSt[K] = legal;
             return legal;
@@ -98,7 +100,7 @@ namespace ProjekatSahOOP
                 int promoteRow = p.beli ? 0 : 7;
                 if (O.Row == promoteRow && Promotion != null) board.SetPiece(O, Promotion);
             }
-            if(uhvacen != null && board == Board)
+            if (uhvacen != null && board == Board)
             {
                 if (CijiPotez) BeliUzeo.Add(uhvacen);
                 else CrniUzeo.Add(uhvacen);
@@ -133,7 +135,7 @@ namespace ProjekatSahOOP
         }
         public bool PokusajPotez(Kvadrat P, Kvadrat O)
         {
-            
+
             if (!LegalMoves(P).Contains(O)) return false;
             Potez m = Sklopi(P, O);
             if (m.Promo && m.Promocija == null)
@@ -144,17 +146,17 @@ namespace ProjekatSahOOP
             PotegniPotez(Board, P, O, EnPassantKV, m.Promocija);
             AzurirajEnPassant(P, O);
             AzurirajRokada(P, O);
-            
+
             MoveHistory.Add(m);
             CijiPotez = !CijiPotez;
             AzurirajStatus();
-            
+
             return true;
 
         }
         static Piece Promeni(Tip T, bool beli)
         {
-            if(T == Tip.Kraljica) return new Kraljica(beli);
+            if (T == Tip.Kraljica) return new Kraljica(beli);
             if (T == Tip.Top) return new Top(beli);
             if (T == Tip.Lovac) return new Lovac(beli);
             if (T == Tip.Skakac) return new Skakac(beli);
@@ -191,10 +193,10 @@ namespace ProjekatSahOOP
             LegalniSt.Clear();
             for (int i = 0; i < 8; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     Piece p = Board.GetPiece(i, j);
-                    if (p!= null && p.beli == CijiPotez && LegalMoves(new Kvadrat(i, j)).Count > 0)
+                    if (p != null && p.beli == CijiPotez && LegalMoves(new Kvadrat(i, j)).Count > 0)
                     {
                         Legalni = true;
                         break;
@@ -203,7 +205,7 @@ namespace ProjekatSahOOP
                 if (Legalni) break;
             }
             bool sah = Board.SAH(CijiPotez);
-            if(!Legalni && sah) St = Status.Mat;
+            if (!Legalni && sah) St = Status.Mat;
             else if (!Legalni && !sah) St = Status.Pat;
             else if (sah) St = Status.Sah;
             else St = Status.Normal;

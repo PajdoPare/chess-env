@@ -24,7 +24,7 @@ namespace ProjekatSahOOP
             SetPiece(x.Odredisno, p);
             SetPiece(x.Polazno, null);
             if (x.EnPassant) SetPiece(x.EnPassantKV, null);
-            if(x.Rokada)
+            if (x.Rokada)
             {
                 SetPiece(x.TopOKV, GetPiece(x.TopPKV));
                 SetPiece(x.TopPKV, null);
@@ -42,6 +42,42 @@ namespace ProjekatSahOOP
             }
             throw new Exception("NEMA KRALJA!!!");
         }
+        int PieceVal(Tip t)
+        {
+            switch (t)
+            {
+                case Tip.Pesak:
+                    return 1;
+                case Tip.Skakac:
+                    return 3;
+                case Tip.Lovac:
+                    return 3;
+                case Tip.Top:
+                    return 5;
+                case Tip.Kraljica:
+                    return 9;
+                default:
+                    return 0;
+            }
+        }
+        public int BeliVal()
+        {
+            int ret = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++) if (board[i, j] != null && board[i, j].beli) ret += PieceVal(board[i, j].T);
+            }
+            return ret;
+        }
+        public int CrniVal()
+        {
+            int ret = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++) if (board[i, j] != null && !board[i, j].beli) ret += PieceVal(board[i, j].T);
+            }
+            return ret;
+        }
         public bool Napadnut(Kvadrat K, bool beli)
         {
             for (int i = 0; i < 8; i++)
@@ -50,7 +86,7 @@ namespace ProjekatSahOOP
                 {
                     Piece p = board[i, j];
                     if (p == null || p.beli != beli) continue;
-                    if(p is Pesak)
+                    if (p is Pesak)
                     {
                         Pesak pesak = (Pesak)p;
                         pesak.KogaNapadam(this, new Kvadrat(i, j));
@@ -106,5 +142,5 @@ namespace ProjekatSahOOP
             }
             return clone;
         }
-    } 
+    }
 }
