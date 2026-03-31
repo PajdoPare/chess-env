@@ -28,7 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.Sat = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // Sat
+            // 
+            this.Sat.Tick += new System.EventHandler(this.Sat_Tick);
             // 
             // Form1
             // 
@@ -42,6 +48,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer Sat;
     }
 }
 

@@ -10,17 +10,21 @@ using System.Windows.Forms;
 
 namespace ProjekatSahOOP
 {
-
+    
     public partial class Form1 : Form
     {
+        TimeSpan BeliV = TimeSpan.FromMinutes(10);
+        TimeSpan CrniV = TimeSpan.FromMinutes(10);
+        DateTime Sad = DateTime.Now;
         GameState GS;
         GrafikaTabla GT;
         Kvadrat? Selected;
         List<Kvadrat> Legalni;
         ListBox ListPotez;
-        Label StatusO, BeliU, CrniU;
+        Label StatusO, BeliU, CrniU, BeloV, CrnoV;
         int BeliP, CrniP;
         Button NewGame;
+        bool NoTime = false;
 
         public Form1()
         {
@@ -41,6 +45,10 @@ namespace ProjekatSahOOP
             GT.Klik += GT_Klik;
             Controls.Add(GT);
             UpdateUI();
+            Sat.Interval = 100;
+            Sat.Start();
+            Sad = DateTime.Now;
+
         }
         int PieceVal(Tip t)
         {
@@ -105,7 +113,7 @@ namespace ProjekatSahOOP
             };
             NewGame = new Button
             {
-                Location = new Point(10, 700),
+                Location = new Point(10, 720),
                 Size = new Size(200, 40),
                 Text = "Nova igra",
                 Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
@@ -115,27 +123,57 @@ namespace ProjekatSahOOP
             };
             NewGame.Click += (s, e) =>
             {
+                NewGameForm NGF = new NewGameForm();
+                if (NGF.ShowDialog() != DialogResult.OK) return;
+                BeliV = NGF.Odabrano;
+                CrniV = NGF.Odabrano;
+                NoTime = NGF.Odabrano == TimeSpan.MaxValue;
                 GS = new GameState();
                 GT.GS = GS;
                 Deselect();
                 ListPotez.Items.Clear();
                 UpdateUI();
                 GS.PromocijaObavezna += GS_Promo;
+                Sad = DateTime.Now;
+                Sat.Start();
             };
             BeliU = new Label
             {
                 Location = new Point(10, 560),
                 Size = new Size(290, 30),
-                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
                 Text = "Beli: 0"
             };
             CrniU = new Label
             {
                 Location = new Point(10, 600),
                 Size = new Size(290, 30),
-                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
                 Text = "Crni: 0"
             };
+            BeloV = new Label
+            {
+                Location = new Point(10, 640),
+                Size = new Size(200, 30),
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                
+            };
+            CrnoV = new Label
+            {
+                Location = new Point(10, 680),
+                BackColor = Color.Black,
+                ForeColor = Color.White,
+                Size = new Size(200, 30),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                
+                
+            };
+            sidePanel.Controls.Add(BeloV);
+            sidePanel.Controls.Add(CrnoV);
             sidePanel.Controls.Add(BeliU);
             sidePanel.Controls.Add(CrniU);
             sidePanel.Controls.Add(StatusO);
@@ -191,6 +229,8 @@ namespace ProjekatSahOOP
             //Task.Delay(1000).GetAwaiter().GetResult();
             GS.Flipped = !GS.Flipped;
             ListPotez.ForeColor = GS.CijiPotez ? Color.White : Color.Black;
+            BeloV.Text = NoTime ? "∞" : Satovi(BeliV);
+            CrnoV.Text = NoTime ? "∞" : Satovi(CrniV);
 
         }
         void UpdateCapturedPieces()
@@ -200,6 +240,41 @@ namespace ProjekatSahOOP
             if (BeliP > CrniP) BeliU.Text += " +" + (BeliP - CrniP).ToString();
             else if (BeliP < CrniP) CrniU.Text += " +" + (CrniP - BeliP).ToString();
         }
+
+        private void Sat_Tick(object sender, EventArgs e)
+        {
+            if(NoTime) return;
+            if(GS.St == Status.Mat || GS.St == Status.Pat)
+            {
+                Sat.Stop();
+                return;
+            }
+            DateTime Sada = DateTime.Now;
+            TimeSpan Proslo = Sada - Sad;
+            Sad = Sada;
+            if(GS.CijiPotez)BeliV -= Proslo;
+            else CrniV -= Proslo;
+            if(BeliV < TimeSpan.Zero)BeliV = TimeSpan.Zero;
+            if (CrniV < TimeSpan.Zero) CrniV = TimeSpan.Zero;
+            BeloV.Text = NoTime ? "∞" :Satovi(BeliV);
+            CrnoV.Text = NoTime ? "∞" : Satovi(CrniV);
+            BeloV.ForeColor = GS.CijiPotez ? Color.Black : Color.Gray;
+            CrnoV.ForeColor = GS.CijiPotez ? Color.Gray : Color.White;
+            if (BeliV.TotalSeconds < 30) BeloV.BackColor = Color.Red;
+            if(CrniV.TotalSeconds < 30) CrnoV.BackColor = Color.Red;
+            if (BeliV == TimeSpan.Zero || CrniV == TimeSpan.Zero)
+            {
+                Sat.Stop();
+                bool beliPobednik = CrniV == TimeSpan.Zero;
+                StatusO.Text = "Vreme je isteklo! Pobedio je " + (beliPobednik ? "Beli" : "Crni");
+            }
+        }
+        string Satovi(TimeSpan t)
+        {
+            if (t.TotalHours >= 1) return t.ToString(@"h\:mm\:ss");
+            else return t.ToString(@"m\:ss");
+        }
+
         string CapturedPieces(List<Piece> uhv)
         {
             List<Piece> pieces = uhv.OrderByDescending(p => PieceVal(p.T)).ToList();

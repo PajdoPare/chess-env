@@ -76,7 +76,9 @@ namespace ProjekatSahOOP
             if(GS.St == Status.Sah || GS.St == Status.Mat)
             {
                 Kvadrat k = b.GdeKralj(GS.CijiPotez);
-                g.FillRectangle(new SolidBrush(Color.FromArgb(120, 255, 0, 0)), k.Col * sz, k.Row * sz, sz, sz);
+                int r = GS.Flipped ? 7 - k.Row : k.Row;
+                int c = GS.Flipped ? 7 - k.Col : k.Col;
+                g.FillRectangle(new SolidBrush(Color.FromArgb(120, 255, 0, 0)), c * sz, r * sz, sz, sz);
             }
             for(int i = 0; i < 8; i++)
             {
