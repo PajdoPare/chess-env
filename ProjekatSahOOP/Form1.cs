@@ -48,6 +48,7 @@ namespace ProjekatSahOOP
             Sat.Interval = 100;
             Sat.Start();
             Sad = DateTime.Now;
+            NoviGame();
 
         }
         int PieceVal(Tip t)
@@ -87,6 +88,22 @@ namespace ProjekatSahOOP
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+        void NoviGame()
+        {
+            NewGameForm NGF = new NewGameForm();
+            if (NGF.ShowDialog() != DialogResult.OK) return;
+            BeliV = NGF.Odabrano;
+            CrniV = NGF.Odabrano;
+            NoTime = NGF.Odabrano == TimeSpan.MaxValue;
+            GS = new GameState();
+            GT.GS = GS;
+            Deselect();
+            ListPotez.Items.Clear();
+            UpdateUI();
+            GS.PromocijaObavezna += GS_Promo;
+            Sad = DateTime.Now;
+            Sat.Start();
+        }
         private void SidePanel()
         {
             Panel sidePanel = new Panel
@@ -123,19 +140,7 @@ namespace ProjekatSahOOP
             };
             NewGame.Click += (s, e) =>
             {
-                NewGameForm NGF = new NewGameForm();
-                if (NGF.ShowDialog() != DialogResult.OK) return;
-                BeliV = NGF.Odabrano;
-                CrniV = NGF.Odabrano;
-                NoTime = NGF.Odabrano == TimeSpan.MaxValue;
-                GS = new GameState();
-                GT.GS = GS;
-                Deselect();
-                ListPotez.Items.Clear();
-                UpdateUI();
-                GS.PromocijaObavezna += GS_Promo;
-                Sad = DateTime.Now;
-                Sat.Start();
+                NoviGame();
             };
             BeliU = new Label
             {
