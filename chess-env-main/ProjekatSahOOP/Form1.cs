@@ -1,0 +1,329 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ProjekatSahOOP
+{
+    
+    public partial class Form1 : Form
+    {
+        TimeSpan BeliV = TimeSpan.FromMinutes(10);
+        TimeSpan CrniV = TimeSpan.FromMinutes(10);
+        DateTime Sad = DateTime.Now;
+        GameState GS;
+        GrafikaTabla GT;
+        Kvadrat? Selected;
+        List<Kvadrat> Legalni;
+        ListBox ListPotez;
+        Label StatusO, BeliU, CrniU, BeloV, CrnoV;
+        int BeliP, CrniP;
+        Button NewGame;
+        bool NoTime = false;
+
+        public Form1()
+        {
+            InitializeComponent();
+            Text = "Sah";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            ImageMapping.Load();
+            GS = new GameState();
+
+            GS.PromocijaObavezna += GS_Promo;
+            GT = new GrafikaTabla();
+            Deselect();
+            SidePanel();
+            GT.GS = GS;
+            GT.Size = new Size(800, 800);
+            GT.Klik += GT_Klik;
+            Controls.Add(GT);
+            UpdateUI();
+            Sat.Interval = 100;
+            Sat.Start();
+            Sad = DateTime.Now;
+            NoviGame();
+
+        }
+        int PieceVal(Tip t)
+        {
+            switch (t)
+            {
+                case Tip.Pesak:
+                    return 1;
+                case Tip.Skakac:
+                    return 3;
+                case Tip.Lovac:
+                    return 3;
+                case Tip.Top:
+                    return 5;
+                case Tip.Kraljica:
+                    return 9;
+                default:
+                    return 0;
+            }
+        }
+
+        void Deselect()
+        {
+            Selected = null;
+            GT.Selected = null;
+            GT.Legalni = new List<Kvadrat>();
+            Legalni = new List<Kvadrat>();
+        }
+        void GS_Promo(Kvadrat P, Kvadrat O)
+        {
+            try
+            {
+                PromotionForm PF = new PromotionForm(GS.CijiPotez);
+                PF.ShowDialog();
+                Tip t = PF.Chosen;
+                GS.Unapredjenje(P, O, t);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        void NoviGame()
+        {
+            NewGameForm NGF = new NewGameForm();
+            if (NGF.ShowDialog() != DialogResult.OK) return;
+            BeliV = NGF.Odabrano;
+            CrniV = NGF.Odabrano;
+            NoTime = NGF.Odabrano == TimeSpan.MaxValue;
+            GS = new GameState();
+            GT.GS = GS;
+            Deselect();
+            ListPotez.Items.Clear();
+            UpdateUI();
+            GS.PromocijaObavezna += GS_Promo;
+            Sad = DateTime.Now;
+            Sat.Start();
+        }
+        private void SidePanel()
+        {
+            Panel sidePanel = new Panel
+            {
+                Location = new Point(800, 0),
+                Size = new Size(300, 800),
+                BackColor = Color.LightGray
+            };
+            StatusO = new Label
+            {
+                Location = new Point(10, 10),
+                Size = new Size(270, 30),
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                Text = "Igrac Beli je na potezu."
+            };
+            ListPotez = new ListBox
+            {
+                Location = new Point(10, 50),
+                Size = new Size(200, 500),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Regular),
+                BackColor = Color.FromArgb(40, 164, 221),
+                ForeColor = Color.White,
+                ScrollAlwaysVisible = false,
+            };
+            NewGame = new Button
+            {
+                Location = new Point(10, 720),
+                Size = new Size(200, 40),
+                Text = "Nova igra",
+                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                BackColor = Color.FromArgb(40, 164, 221),
+                ForeColor = Color.White,
+                Cursor = Cursors.Hand
+            };
+            NewGame.Click += (s, e) =>
+            {
+                NoviGame();
+            };
+            BeliU = new Label
+            {
+                Location = new Point(10, 560),
+                Size = new Size(290, 30),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                Text = "Beli: 0"
+            };
+            CrniU = new Label
+            {
+                Location = new Point(10, 600),
+                Size = new Size(290, 30),
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                Text = "Crni: 0"
+            };
+            BeloV = new Label
+            {
+                Location = new Point(10, 640),
+                Size = new Size(200, 30),
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                
+            };
+            CrnoV = new Label
+            {
+                Location = new Point(10, 680),
+                BackColor = Color.Black,
+                ForeColor = Color.White,
+                Size = new Size(200, 30),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Comic Sans MS", 10, FontStyle.Bold),
+                
+                
+            };
+            sidePanel.Controls.Add(BeloV);
+            sidePanel.Controls.Add(CrnoV);
+            sidePanel.Controls.Add(BeliU);
+            sidePanel.Controls.Add(CrniU);
+            sidePanel.Controls.Add(StatusO);
+            sidePanel.Controls.Add(ListPotez);
+            sidePanel.Controls.Add(NewGame);
+            Controls.Add(sidePanel);
+            ClientSize = new Size(1020, 800);
+        }
+        private void GT_Klik(Kvadrat obj)
+        {
+            if (Selected == null)
+            {
+                Piece p = GS.Board.GetPiece(obj);
+                if (p == null || p.beli != GS.CijiPotez) return;
+                Selected = obj;
+                Legalni = GS.LegalMoves(obj);
+                GT.Dock = DockStyle.Left;
+                GT.Selected = Selected;
+                GT.Legalni = Legalni;
+            }
+            else if (Legalni.Contains(obj))
+            {
+                GS.PokusajPotez(Selected.Value, obj);
+                Deselect();
+                UpdateUI();
+            }
+            else
+            {
+                Piece p = GS.Board.GetPiece(obj);
+                if (p == null || p.beli != GS.CijiPotez)
+                {
+                    Deselect();
+                }
+                else
+                {
+                    Selected = obj;
+                    Legalni = GS.LegalMoves(obj);
+                    GT.Selected = Selected;
+                    GT.Legalni = Legalni;
+                }
+            }
+            GT.Invalidate();
+        }
+        void UpdateUI()
+        {
+            BeliP = GS.BeliP;
+            CrniP = GS.CrniP;
+            GT.LastMove = GS.MoveHistory.LastOrDefault();
+            GT.Invalidate();
+            UpdateStatusO();
+            UpdateMoveHistory();
+            UpdateCapturedPieces();
+            //Task.Delay(1000).GetAwaiter().GetResult();
+            GS.Flipped = !GS.Flipped;
+            ListPotez.ForeColor = GS.CijiPotez ? Color.White : Color.Black;
+            BeloV.Text = NoTime ? "∞" : Satovi(BeliV);
+            CrnoV.Text = NoTime ? "∞" : Satovi(CrniV);
+
+        }
+        void UpdateCapturedPieces()
+        {
+            BeliU.Text = "Beli: " + CapturedPieces(GS.BeliUzeo);
+            CrniU.Text = "Crni: " + CapturedPieces(GS.CrniUzeo);
+            if (BeliP > CrniP) BeliU.Text += " +" + (BeliP - CrniP).ToString();
+            else if (BeliP < CrniP) CrniU.Text += " +" + (CrniP - BeliP).ToString();
+        }
+
+    
+
+        private void Sat_Tick(object sender, EventArgs e)
+        {
+            if(NoTime) return;
+            if(GS.St == Status.Mat || GS.St == Status.Pat)
+            {
+                Sat.Stop();
+                return;
+            }
+            DateTime Sada = DateTime.Now;
+            TimeSpan Proslo = Sada - Sad;
+            Sad = Sada;
+            if(GS.CijiPotez)BeliV -= Proslo;
+            else CrniV -= Proslo;
+            if(BeliV < TimeSpan.Zero)BeliV = TimeSpan.Zero;
+            if (CrniV < TimeSpan.Zero) CrniV = TimeSpan.Zero;
+            BeloV.Text = NoTime ? "∞" :Satovi(BeliV);
+            CrnoV.Text = NoTime ? "∞" : Satovi(CrniV);
+            BeloV.ForeColor = GS.CijiPotez ? Color.Black : Color.Gray;
+            CrnoV.ForeColor = GS.CijiPotez ? Color.Gray : Color.White;
+            if (BeliV.TotalSeconds < 30) BeloV.BackColor = Color.Red;
+            if(CrniV.TotalSeconds < 30) CrnoV.BackColor = Color.Red;
+            if (BeliV == TimeSpan.Zero || CrniV == TimeSpan.Zero)
+            {
+                Sat.Stop();
+                bool beliPobednik = CrniV == TimeSpan.Zero;
+                StatusO.Text = "Vreme je isteklo! " + (beliPobednik ? "Beli" : "Crni" + " je pobedio");
+            }
+        }
+        string Satovi(TimeSpan t)
+        {
+            if (t.TotalHours >= 1) return t.ToString(@"h\:mm\:ss");
+            else return t.ToString(@"m\:ss");
+        }
+
+        string CapturedPieces(List<Piece> uhv)
+        {
+            List<Piece> pieces = uhv.OrderByDescending(p => PieceVal(p.T)).ToList();
+            return string.Join("", pieces.Select(p => p.ToString()));
+        }
+        void UpdateMoveHistory()
+        {
+            if (GS.MoveHistory.Count == 0) return;
+            Potez pos = GS.MoveHistory.Last();
+            if (pos.Beli)
+            {
+                int brojPoteza = (GS.MoveHistory.Count + 1) / 2;
+                ListPotez.Items.Add($"{brojPoteza,2}. {pos.Notacija,-8}");
+            }
+            else
+            {
+                int idx = ListPotez.Items.Count - 1;
+                string last = ListPotez.Items[idx].ToString();
+                ListPotez.Items[idx] = last + pos.Notacija;
+            }
+            ListPotez.TopIndex = ListPotez.Items.Count - 1;
+        }
+        void UpdateStatusO()
+        {
+            string igrac = GS.CijiPotez ? "Beli" : "Crni";
+            string opp = GS.CijiPotez ? "Crni" : "Beli";
+            if (GS.St == Status.Normal)
+            {
+                StatusO.Text = "Igrac " + igrac + " je na potezu.";
+            }
+            else if (GS.St == Status.Sah)
+            {
+                StatusO.Text = "Igrac " + igrac + " je u sahu.";
+            }
+            else if (GS.St == Status.Mat)
+            {
+                StatusO.Text = "Mat! Igrac " + opp + "\nje pobedio";
+            }
+            else if (GS.St == Status.Pat)
+            {
+                StatusO.Text = "Pat! Remi.";
+            }
+        }
+    }
+}

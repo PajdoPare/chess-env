@@ -1,0 +1,40 @@
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.AssemblyReference.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Form1.resources
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe.config
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.pdb
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.exe
+C:\Users\Pavle\source\repos\ProjekatSahOOP\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.pdb
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe.config
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.pdb
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.AssemblyReference.cache
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Form1.resources
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.exe
+C:\Users\sekulic.pavle\Source\Repos\chess-env3\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.pdb
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe.config
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.pdb
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.AssemblyReference.cache
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Form1.resources
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.exe
+F:\chess-env-main\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.pdb
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe.config
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.exe
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\bin\Debug\ProjekatSahOOP.pdb
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.AssemblyReference.cache
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Form1.resources
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.Properties.Resources.resources
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.GenerateResource.cache
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.csproj.CoreCompileInputs.cache
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.exe
+F:\chess-env-main (1)\chess-env-main\ProjekatSahOOP\obj\Debug\ProjekatSahOOP.pdb
